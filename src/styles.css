@@ -160,6 +160,7 @@ a { text-decoration: none; }
 .container { max-width: 1280px; padding-inline: 64px; margin-inline: auto; }
 .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .brand-logo { width: 178px; height: 110px; object-fit: contain; }
+.site-header .brand-logo { width: 140px; height: 75px; }
 .navigation { display: flex; align-items: center; gap: 29px; }
 .navigation a { font-size: 13px; font-weight: 600; transition: color 180ms; }
 .navigation a:hover { color: var(--muted-foreground); }
