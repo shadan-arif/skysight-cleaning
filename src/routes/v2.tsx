@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent } from "react";
 import { ArrowUpRight, Menu, X, Building2, Sun, Wind, Factory, Landmark, Paintbrush, Layers } from "lucide-react";
 import logo from "@/assets/BionicEyeLogoTrimmed.png.asset.json";
 import hero from "@/assets/C10_3.jpg.asset.json";
@@ -48,6 +48,55 @@ const applications = [
   [Paintbrush, "Graffiti removal"],
   [Layers, "Surface coating and treatment, currently in development"],
 ] as const;
+
+const VIDEO_SRC = "https://thebioniceye.vercel.app/assets/video/c10-short.mp4";
+const VIDEO_POSTER = "https://thebioniceye.vercel.app/assets/video/c10-short-poster-wash-1920.jpg";
+
+function V2Film() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  function togglePlay() {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { v.play(); setPlaying(true); }
+    else { v.pause(); setPlaying(false); }
+  }
+
+  return (
+    <figure className="v2-film" aria-label="Film of the C10 cleaning">
+      <div className="v2-film__frame">
+        <video
+          ref={videoRef}
+          className="v2-film__video"
+          src={VIDEO_SRC}
+          poster={VIDEO_POSTER}
+          preload="none"
+          playsInline
+          controls={playing}
+          width={1920}
+          height={1080}
+          aria-label="Film of the C10 cleaning, 55 seconds, music only"
+          onPause={() => setPlaying(false)}
+          onEnded={() => setPlaying(false)}
+        />
+        {!playing && (
+          <button
+            className="v2-film__play"
+            type="button"
+            aria-label="Play film, 55 seconds"
+            onClick={togglePlay}
+          >
+            <span className="v2-film__play-icon" aria-hidden="true" />
+            <span className="v2-film__play-label">
+              Play film <span className="v2-film__play-time">0:55</span>
+            </span>
+          </button>
+        )}
+      </div>
+    </figure>
+  );
+}
 
 function V2EnquiryForm() {
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -206,6 +255,7 @@ function V2Page() {
                   </div>
                 ))}
               </dl>
+              <V2Film />
               <div className="v2-system__carousel-wrap">
                 <SystemCarousel />
               </div>
@@ -313,7 +363,7 @@ function V2Page() {
         </section>
 
         {/* 7. ENQUIRY */}
-        <section className="v2-section v2-section--alt v2-enquiry" id="v2-contact" aria-labelledby="v2-enquiry-title">
+        <section className="v2-section v2-section--contact v2-enquiry" id="v2-contact" aria-labelledby="v2-enquiry-title">
           <div className="v2-container v2-enquiry__grid">
             <div className="v2-enquiry__aside">
               <h2 className="v2-enquiry__heading" id="v2-enquiry-title">Contact Us</h2>
